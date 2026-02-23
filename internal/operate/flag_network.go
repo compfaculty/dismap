@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"sync/atomic"
 )
 
 func FlagNetwork(op *os.File, wg *sync.WaitGroup, lock *sync.Mutex, address string, Args map[string]interface{}) {
@@ -28,8 +29,7 @@ func FlagNetwork(op *os.File, wg *sync.WaitGroup, lock *sync.Mutex, address stri
 
 	logger.Info("Start to identify the targets")
 	intSyncThread := 0
-	intAll := 0
-	intIde := 0
+	var intAll, intIde int64
 	for _, host := range actualHosts {
 		for _, port := range ports {
 			wg.Add(3)
@@ -37,11 +37,11 @@ func FlagNetwork(op *os.File, wg *sync.WaitGroup, lock *sync.Mutex, address stri
 			go func(host string, port int, Args map[string]interface{}) {
 				resTls := protocol.DiscoverTls(host, port, Args)
 				if resTls["status"].(string) == "open" {
-					intAll++
+					atomic.AddInt64(&intAll, 1)
 					parse.VerboseParse(resTls)
 					output.Write(resTls, op)
 					if strings.Contains(resTls["uri"].(string), "://") {
-						intIde++
+						atomic.AddInt64(&intIde, 1)
 					}
 				}
 				wg.Done()
@@ -50,11 +50,11 @@ func FlagNetwork(op *os.File, wg *sync.WaitGroup, lock *sync.Mutex, address stri
 			go func(host string, port int, Args map[string]interface{}) {
 				resTcp := protocol.DiscoverTcp(host, port, Args)
 				if resTcp["status"].(string) == "open" {
-					intAll++
+					atomic.AddInt64(&intAll, 1)
 					parse.VerboseParse(resTcp)
 					output.Write(resTcp, op)
 					if strings.Contains(resTcp["uri"].(string), "://") {
-						intIde++
+						atomic.AddInt64(&intIde, 1)
 					}
 				}
 				wg.Done()
@@ -63,11 +63,11 @@ func FlagNetwork(op *os.File, wg *sync.WaitGroup, lock *sync.Mutex, address stri
 			go func(host string, port int, Args map[string]interface{}) {
 				resUdp := protocol.DiscoverUdp(host, port, Args)
 				if resUdp["status"].(string) == "open" {
-					intAll++
+					atomic.AddInt64(&intAll, 1)
 					parse.VerboseParse(resUdp)
 					output.Write(resUdp, op)
 					if strings.Contains(resUdp["uri"].(string), "://") {
-						intIde++
+						atomic.AddInt64(&intIde, 1)
 					}
 				}
 				wg.Done()
@@ -80,8 +80,8 @@ func FlagNetwork(op *os.File, wg *sync.WaitGroup, lock *sync.Mutex, address stri
 	}
 	wg.Wait()
 	logger.Info(logger.LightGreen("A total of ") +
-		logger.White(strconv.Itoa(intAll)) +
+		logger.White(strconv.FormatInt(atomic.LoadInt64(&intAll), 10)) +
 		logger.LightGreen(" targets, the rule base hits ") +
-		logger.White(strconv.Itoa(intIde)) +
+		logger.White(strconv.FormatInt(atomic.LoadInt64(&intIde), 10)) +
 		logger.LightGreen(" targets"))
 }

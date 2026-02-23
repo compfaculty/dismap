@@ -1,0 +1,29 @@
+# Binaries
+/dismap
+/dismap-*
+*.exe
+
+# Output
+/output.txt
+/output*.txt
+# Scan output (optional - uncomment to ignore)
+# output*.json
+# result*.json
+
+# Go
+/vendor/
+*.test
+*.out
+*.prof
+coverage.html
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

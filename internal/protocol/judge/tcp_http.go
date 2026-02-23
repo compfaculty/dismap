@@ -9,7 +9,7 @@ import (
 	"github.com/zhzyker/dismap/internal/proxy"
 	"github.com/zhzyker/dismap/pkg/logger"
 	"golang.org/x/text/encoding/simplifiedchinese"
-	"io/ioutil"
+	"io"
 	"net"
 	"net/http"
 	"net/url"
@@ -21,13 +21,12 @@ import (
 	"unicode/utf8"
 )
 
+var httpVersionRe = regexp.MustCompile(`^HTTP/\d.\d \d*`)
+
 func TcpHTTP(result map[string]interface{}, Args map[string]interface{}) bool {
 	var buff []byte
 	buff, _ = result["banner.byte"].([]byte)
-	ok, err := regexp.Match(`^HTTP/\d.\d \d*`, buff)
-	if logger.DebugError(err) {
-		return false
-	}
+	ok := httpVersionRe.Match(buff)
 	if ok {
 		result["protocol"] = "http"
 		httpResult, httpErr := httpIdentifyResult(result, Args)
@@ -64,7 +63,7 @@ func httpIdentifyResult(result map[string]interface{}, Args map[string]interface
 	var targetUrl string
 	if Args["FlagUrl"].(string) != "" {
 		targetUrl = Args["FlagUrl"].(string)
-	} else{
+	} else {
 		host := result["host"].(string)
 		port := strconv.Itoa(result["port"].(int))
 		add := net.JoinHostPort(host, port)
@@ -145,7 +144,7 @@ func getFaviconMd5(Url string, timeout int) string {
 		return ""
 	}
 	defer resp.Body.Close()
-	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	bodyBytes, err := io.ReadAll(resp.Body)
 	hash := md5.Sum(bodyBytes)
 	md5 := fmt.Sprintf("%x", hash)
 	return md5
@@ -226,7 +225,7 @@ func defaultRequests(Url string, timeout int) ([]RespLab, error) {
 			}
 			defer resp.Body.Close()
 			// get response body for string
-			bodyBytes, err := ioutil.ReadAll(resp.Body)
+			bodyBytes, err := io.ReadAll(resp.Body)
 			responseBody = string(bodyBytes)
 			// Solve the problem of garbled body codes with unmatched numbers
 			if !utf8.Valid(bodyBytes) {
@@ -256,7 +255,7 @@ func defaultRequests(Url string, timeout int) ([]RespLab, error) {
 			return RespData, nil
 		}
 		// get response body for string
-		bodyBytes, err := ioutil.ReadAll(resp.Body)
+		bodyBytes, err := io.ReadAll(resp.Body)
 		responseBody = string(bodyBytes)
 		// Solve the problem of garbled body codes with unmatched numbers
 		if !utf8.Valid(bodyBytes) {
@@ -287,7 +286,7 @@ func defaultRequests(Url string, timeout int) ([]RespLab, error) {
 		return RespData, nil
 	}
 	// get response body for string
-	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	bodyBytes, err := io.ReadAll(resp.Body)
 	responseBody = string(bodyBytes)
 	// Solve the problem of garbled body codes with unmatched numbers
 	if !utf8.Valid(bodyBytes) {
@@ -353,7 +352,7 @@ func customRequests(Url string, timeout int, Method string, Path string, Header 
 	}
 	defer resp.Body.Close()
 	// Get Response Body for string
-	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	bodyBytes, err := io.ReadAll(resp.Body)
 	var responseBody = string(bodyBytes)
 	// Solve the problem of garbled body codes with unmatched numbers
 	if !utf8.Valid(bodyBytes) {

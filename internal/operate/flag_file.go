@@ -15,8 +15,10 @@ func FlagFile(op *os.File, wg *sync.WaitGroup, lock *sync.Mutex, file string, Ar
 	thread := Args["FlagThread"].(int)
 	f, err := os.Open(file)
 	if err != nil {
-		logger.Error("There is no " + logger.LightRed(f) + " file or the directory does not exist")
+		logger.Error("There is no " + logger.LightRed(file) + " file or the directory does not exist")
+		return
 	}
+	defer f.Close()
 
 	logger.Info(logger.LightGreen("Batch scan the targets in " + logger.Yellow(file) + logger.LightGreen(", priority network segment")))
 	buf := bufio.NewReader(f)
@@ -25,35 +27,35 @@ func FlagFile(op *os.File, wg *sync.WaitGroup, lock *sync.Mutex, file string, Ar
 	for {
 		line, err := buf.ReadString('\n')
 		line = strings.TrimSpace(line)
-		if logger.DebugError(err) || err == io.EOF {
+		if line != "" {
+			if parse.NetJudgeParse(line) {
+				FlagNetwork(op, wg, lock, line, Args)
+			} else {
+				_, urlErr := url.Parse(line)
+				if logger.DebugError(urlErr) {
+					logger.Error(logger.Red("Unable to parse: " + line))
+				} else {
+					wg.Add(1)
+					intSyncThread++
+					go func(line string, Args map[string]interface{}) {
+						lock.Lock()
+						FlagUrl(op, line, Args)
+						lock.Unlock()
+						wg.Done()
+					}(line, Args)
+					if intSyncThread >= thread {
+						intSyncThread = 0
+						wg.Wait()
+					}
+				}
+			}
+		}
+		if err == io.EOF {
 			break
 		}
-		if line == "" {
-			continue
-		}
-
-		if parse.NetJudgeParse(line) {
-			FlagNetwork(op, wg, lock, line, Args)
-			continue
-		}
-		_, err = url.Parse(line)
-		if logger.DebugError(err) {
-			logger.Error(logger.Red("Unable to parse: " + line))
-			continue
-		} else {
-			wg.Add(1)
-			intSyncThread++
-			go func(line string, Args map[string]interface{}) {
-				lock.Lock()
-				FlagUrl(op, line, Args)
-				lock.Unlock()
-				wg.Done()
-			}(line, Args)
-			if intSyncThread >= thread {
-				intSyncThread = 0
-				wg.Wait()
-			}
-			continue
+		if err != nil {
+			logger.DebugError(err)
+			break
 		}
 	}
 	wg.Wait()

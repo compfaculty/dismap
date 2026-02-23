@@ -1,11 +1,11 @@
 ## 🌀 Dismap - Asset discovery and identification tool
-<a href="https://github.com/zhzyker/dismap"><img alt="Release" src="https://img.shields.io/badge/golang-1.6+-9cf"></a>
+<a href="https://github.com/zhzyker/dismap"><img alt="Release" src="https://img.shields.io/badge/golang-1.24+-9cf"></a>
 <a href="https://github.com/zhzyker/dismap"><img alt="Release" src="https://img.shields.io/badge/dismap-0.3-ff69b4"></a>
 <a href="https://github.com/zhzyker/dismap"><img alt="Release" src="https://img.shields.io/badge/LICENSE-GPL-important"></a>
 ![GitHub Repo stars](https://img.shields.io/github/stars/zhzyker/dismap?color=success)
 ![GitHub forks](https://img.shields.io/github/forks/zhzyker/dismap)
-![GitHub all release](https://img.shields.io/github/downloads/zhzyker/dismap/total?color=blueviolet)  
-[[中文 Readme]](https://github.com/zhzyker/dismap/blob/main/readme-zh.md)  
+![GitHub all release](https://img.shields.io/github/downloads/zhzyker/dismap/total?color=blueviolet)
+
 Dismap positioning is an asset **discovery** and **identification** tool. It can quickly identify protocols and fingerprint information such as web/tcp/udp, locate asset types, and is suitable for internal and external networks. It assists red team personnel to quickly locate potential risk asset information, and assist blue team personnel to detect Suspected Fragile Assets
 
 Dismap has a complete fingerprint rule base, currently including tcp/udp/tls protocol fingerprints and **4500+ web fingerprint rules**, which can identify favicon, body, header, etc. The introduction to the rule base is located at [RuleLab](https://github.com/zhzyker/dismap#-rulelab)
@@ -13,14 +13,23 @@ Dismap has a complete fingerprint rule base, currently including tcp/udp/tls pro
 ~~Scan results can be directly sent to [vulmap](https://github.com/zhzyker/vulmap)(>=0.8) for vulnerability scanning.~~ In version 0.3, the text result has been changed, the json file result has been added, and vulmap will support linkage in >= 1.0
 
 ## 🏂 Run
-Dismap is a binary file for Linux, MacOS, and Windows. Go to [Release](https://github.com/zhzyker/dismap/releases) to download the corresponding version to run:
-```Bash
+
+### Build from source
+```bash
+make build        # Native build
+make build-kali   # Optimized build for Linux Kali (amd64)
+make help         # List all targets
+```
+
+### Pre-built binaries
+Go to [Release](https://github.com/zhzyker/dismap/releases) to download binaries for Linux, MacOS, and Windows:
+```bash
 # Linux or MacOS
-zhzyker@debian:~$ chmod +x dismap-0.3-linux-amd64
-zhzyker@debian:~$ ./dismap-0.3-linux-amd64 -h
+chmod +x dismap-0.3-linux-amd64
+./dismap-0.3-linux-amd64 -h
 
 # Windows
-C:\Users\zhzyker\Desktop> dismap-0.3-windows-amd64.exe -h
+dismap-0.3-windows-amd64.exe -h
 ```  
 >  ![dismap](https://github.com/zhzyker/zhzyker/blob/main/dismap-images/dismap-0.3.png)
 
@@ -45,14 +54,102 @@ C:\Users\zhzyker\Desktop> dismap-0.3-windows-amd64.exe -h
 ```
 
 ## 🎨 Examples
-```Bash
-zhzyker@debian:~$ ./dismap -i 192.168.1.1/24
-zhzyker@debian:~$ ./dismap -i 192.168.1.1/24 -o result.txt -j result.json
-zhzyker@debian:~$ ./dismap -i 192.168.1.1/24 --np --timeout 10
-zhzyker@debian:~$ ./dismap -i 192.168.1.1/24 -t 1000
-zhzyker@debian:~$ ./dismap -u https://github.com/zhzyker/dismap
-zhzyker@debian:~$ ./dismap -u mysql://192.168.1.1:3306
-zhzyker@debian:~$ ./dismap -i 192.168.1.1/24 -p 1-65535
+
+### Build (Makefile)
+```bash
+make build          # Native build
+make build-kali     # Optimized build for Linux Kali (amd64)
+make build-release  # All platforms (linux, darwin, windows)
+make run ARGS="-u https://example.com"
+```
+
+### Single target (URI)
+```bash
+./dismap -u https://github.com/zhzyker/dismap
+./dismap -u https://example.com:8443
+./dismap -u mysql://192.168.1.1:3306
+./dismap -u redis://192.168.1.1:6379
+./dismap -u ssh://192.168.1.1:22
+./dismap -u http://192.168.1.1:8080
+./dismap -u rdp://192.168.1.1:3389
+```
+
+### Network segment scan
+```bash
+./dismap -i 192.168.1.0/24
+./dismap -i 192.168.1.1-254
+./dismap -i 10.0.0.0/24 -o scan.txt
+./dismap -i 172.16.0.0/24 -j results.json
+./dismap -i 192.168.1.0/24 -o result.txt -j result.json
+```
+
+### Custom ports
+```bash
+./dismap -i 192.168.1.0/24 -p 80,443,8080,8443
+./dismap -i 192.168.1.0/24 -p 1-1000
+./dismap -i 192.168.1.0/24 -p 22,80,443,3306,5432,6379,27017
+./dismap -u https://example.com -p 1-65535
+```
+
+### Timeout and threads
+```bash
+./dismap -i 192.168.1.0/24 --timeout 10
+./dismap -i 192.168.1.0/24 -t 1000
+./dismap -i 192.168.1.0/24 -t 500 --timeout 3
+./dismap -i 10.0.0.0/16 -t 2000 --timeout 5
+```
+
+### Skip ICMP (no ping)
+```bash
+./dismap -i 192.168.1.0/24 --np
+./dismap -i 192.168.1.0/24 --np --timeout 10
+./dismap -i 192.168.1.0/24 --np -t 1000
+```
+
+### Protocol mode and type filter
+```bash
+./dismap -i 192.168.1.0/24 -m http
+./dismap -i 192.168.1.0/24 -m mysql
+./dismap -i 192.168.1.0/24 --type tcp
+./dismap -i 192.168.1.0/24 --type udp
+```
+
+### Batch scan from file
+```bash
+./dismap -f targets.txt
+./dismap -f targets.txt -o batch-result.txt -j batch-result.json
+./dismap -f targets.txt -t 1000 --timeout 5
+echo -e "192.168.1.0/24\nhttps://example.com" > targets.txt && ./dismap -f targets.txt
+```
+
+### Proxy
+```bash
+./dismap -u https://example.com --proxy socks5://127.0.0.1:1080
+./dismap -i 192.168.1.0/24 --proxy http://127.0.0.1:8080
+./dismap -f targets.txt --proxy socks5://localhost:9050
+```
+
+### Log level
+```bash
+./dismap -u https://example.com -l 5        # Verbose
+./dismap -i 192.168.1.0/24 -l 4            # Debug
+./dismap -i 192.168.1.0/24 -l 2            # Info only
+./dismap -i 192.168.1.0/24 -l 0 --nc       # Fatal only, no colors
+```
+
+### Output options
+```bash
+./dismap -i 192.168.1.0/24 -o scan.txt
+./dismap -i 192.168.1.0/24 -j scan.json
+./dismap -i 192.168.1.0/24 -o scan.txt -j scan.json
+./dismap -u https://example.com -o single.txt
+```
+
+### Combined (typical lab use)
+```bash
+./dismap -i 192.168.1.0/24 -p 80,443,8080,8443 -o web.txt -j web.json -t 1000 --np
+./dismap -f lab-targets.txt -o lab.txt -j lab.json --proxy socks5://127.0.0.1:1080
+./dismap -i 10.10.0.0/24 -m http --timeout 10 -l 4
 ```
 
 ## ⛪ Discussion
@@ -81,7 +178,7 @@ ReqBody: str  /* Customize the body of the POST request */
 
 Whether the character `<flink-root></flink-root>` exists in the response body
 ```Golang
-{"Apahce Flink", "body", "", InStr{"(<flink-root></flink-root>)", "", ""}, ReqHttp{"", "", nil, ""}},
+{"Apache Flink", "body", "", InStr{"(<flink-root></flink-root>)", "", ""}, ReqHttp{"", "", nil, ""}},
 ```  
 
 **Example2:**

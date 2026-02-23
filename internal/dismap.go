@@ -12,29 +12,30 @@ import (
 
 
 func which(Args map[string]interface{}, wg *sync.WaitGroup, lock *sync.Mutex) {
-	op := output.Open(Args)
+	op, err := output.Open(Args)
+	if err != nil || op == nil {
+		logger.Error("Failed to open output file")
+		return
+	}
+	defer output.Close(op)
 
 	address := Args["FlagNetwork"].(string)
 	if address != "" {
 		operate.FlagNetwork(op, wg, lock, address, Args)
-		output.Close(op)
 		return
 	}
 
 	uri := Args["FlagUrl"].(string)
 	if uri != "" {
 		operate.FlagUrl(op, uri, Args)
-		output.Close(op)
 		return
 	}
 
 	file := Args["FlagFile"].(string)
 	if file != "" {
 		operate.FlagFile(op, wg, lock, file, Args)
-		output.Close(op)
 		return
 	}
-
 }
 
 func DisMap() {

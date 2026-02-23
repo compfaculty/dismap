@@ -1473,7 +1473,7 @@ var RuleData = []RuleLab{
 	{1, "faqrobot", "body", "", InStr{"(content=\"faq客服机器人|南京云问网络技术有限公司)", "", ""}, ReqHttp{"", "", nil, ""}},
 	{1, "FASTADMIN-Framework", "body", "", InStr{"(copyright © fastadmin.net|class=\"navbar-brand\">fastadmin</a>|<a href=\"/\" class=\"navbar-brand\">fastadmin</a>|<h1>fastadmin</h1>|fastadmin.net)", "", ""}, ReqHttp{"", "", nil, ""}},
 	{1, "Fast-FW300-Router", "header", "", InStr{"", "(fw300r)", ""}, ReqHttp{"", "", nil, ""}},
-	{1, "Fastjson", "body", "", InStr{"(js/base/fastjson|var json = json.parse|nested exception is com.alibaba.fastjson.JSONException: unclosed string)", "", ""}, ReqHttp{"POST", "", []string{"Content-Type: application/json", "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"}, "{\"a\":\""}},
+	{1, "Fastjson", "body", "", InStr{"(js/base/fastjson|var json = json.parse|nested exception is com.alibaba.fastjson.JSONException: unclosed string)", "", ""}, ReqHttp{"POST", "", []string{"Content-Type: application/json", "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 YaBrowser/24.1.0.0 Safari/537.36"}, "{\"a\":\""}},
 	{1, "Fastly-CDN", "body", "", InStr{"(fastcdn.org)", "", ""}, ReqHttp{"", "", nil, ""}},
 	{1, "Fast-Router", "body", "", InStr{"(<a href=\"http://www.fastcom.com.cn\"><img src=\"../img/login/logo.gif)", "", ""}, ReqHttp{"", "", nil, ""}},
 	{1, "Fastweb", "header", "", InStr{"", "(fw-via: )", ""}, ReqHttp{"", "", nil, ""}},
