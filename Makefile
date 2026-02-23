@@ -1,5 +1,5 @@
 # Dismap - Asset discovery and identification tool
-# https://github.com/zhzyker/dismap
+# https://github.com/compfaculty/dismap
 
 BINARY     := dismap
 MAIN       := ./cmd/dismap
