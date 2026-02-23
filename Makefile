@@ -51,6 +51,18 @@ run: build
 test:
 	$(GO) test ./...
 
+## Run tests with coverage
+test-cover:
+	$(GO) test -cover ./...
+
+## Run tests with coverage report (writes coverage.out)
+test-cover-profile:
+	$(GO) test -coverprofile=coverage.out ./...
+
+## Run tests and open HTML coverage report
+test-cover-html: test-cover-profile
+	$(GO) tool cover -html=coverage.out -o coverage.html
+
 ## Tidy and verify module
 mod:
 	$(GO) mod tidy
@@ -78,6 +90,9 @@ help:
 	@echo "  make install       - Install to GOPATH/bin"
 	@echo "  make run ARGS=...  - Build and run with optional args"
 	@echo "  make test          - Run tests"
+	@echo "  make test-cover    - Run tests with coverage"
+	@echo "  make test-cover-profile - Generate coverage.out"
+	@echo "  make test-cover-html   - Generate coverage.html"
 	@echo "  make mod           - Tidy and verify go.mod"
 	@echo "  make fmt           - Format code"
 	@echo "  make lint          - Run vet/linter"
