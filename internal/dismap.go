@@ -1,7 +1,6 @@
 package internal
 
 import (
-	"github.com/zhzyker/dismap/configs"
 	"github.com/zhzyker/dismap/internal/flag"
 	"github.com/zhzyker/dismap/internal/operate"
 	"github.com/zhzyker/dismap/internal/output"
@@ -39,7 +38,6 @@ func which(Args map[string]interface{}, wg *sync.WaitGroup, lock *sync.Mutex) {
 }
 
 func DisMap() {
-	configs.Banner()
 	Args := flag.Flags()
 	wg := &sync.WaitGroup{}
 	lock := &sync.Mutex{}

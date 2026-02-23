@@ -8,7 +8,7 @@ _  __  /__  /__  ___/_  __ `__ \  __ `/__  __ \
 \__,_/  /_/  /____/ /_/ /_/ /_/\__,_/ _  .___/
                                         /_/
   author: zhzyker && Nemophllist
-  from: https://github.com/zhzyker/dismap
+  updated by: compfaculty
 */
 
 import (
