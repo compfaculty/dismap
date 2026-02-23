@@ -1,18 +1,10 @@
 package main
 
-/*
-_____________
-______  /__(_)_____________ _________ ________
-_  __  /__  /__  ___/_  __ `__ \  __ `/__  __ \
-/ /_/ / _  / _(__  )_  / / / / / /_/ /__  /_/ /
-\__,_/  /_/  /____/ /_/ /_/ /_/\__,_/ _  .___/
-                                        /_/
-  author: zhzyker && Nemophllist
-  updated by: compfaculty
-*/
+// Dismap - Asset discovery and identification tool
+// https://github.com/compfaculty/dismap
 
 import (
-	"github.com/zhzyker/dismap/internal"
+	"github.com/compfaculty/dismap/internal"
 )
 
 func main() {

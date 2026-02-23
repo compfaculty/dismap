@@ -4,8 +4,8 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"github.com/zhzyker/dismap/internal/flag"
-	"github.com/zhzyker/dismap/pkg/logger"
+	"github.com/compfaculty/dismap/internal/flag"
+	"github.com/compfaculty/dismap/pkg/logger"
 	"os"
 	"time"
 )

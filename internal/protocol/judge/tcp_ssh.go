@@ -1,7 +1,7 @@
 package judge
 
 import (
-	"github.com/zhzyker/dismap/pkg/logger"
+	"github.com/compfaculty/dismap/pkg/logger"
 	"regexp"
 	"strings"
 )

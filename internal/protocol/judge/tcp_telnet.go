@@ -2,7 +2,7 @@ package judge
 
 import (
 	"encoding/hex"
-	"github.com/zhzyker/dismap/pkg/logger"
+	"github.com/compfaculty/dismap/pkg/logger"
 	"regexp"
 	"strings"
 )

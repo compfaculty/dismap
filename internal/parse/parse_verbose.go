@@ -3,7 +3,7 @@ package parse
 import (
 	"encoding/hex"
 	"fmt"
-	"github.com/zhzyker/dismap/pkg/logger"
+	"github.com/compfaculty/dismap/pkg/logger"
 )
 
 func VerboseParse(res map[string]interface{}) {

@@ -1,7 +1,7 @@
 package parse
 
 import (
-	"github.com/zhzyker/dismap/configs"
+	"github.com/compfaculty/dismap/configs"
 	"regexp"
 	"strconv"
 	"strings"

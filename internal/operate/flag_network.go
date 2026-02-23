@@ -1,10 +1,10 @@
 package operate
 
 import (
-	"github.com/zhzyker/dismap/internal/output"
-	"github.com/zhzyker/dismap/internal/parse"
-	"github.com/zhzyker/dismap/internal/protocol"
-	"github.com/zhzyker/dismap/pkg/logger"
+	"github.com/compfaculty/dismap/internal/output"
+	"github.com/compfaculty/dismap/internal/parse"
+	"github.com/compfaculty/dismap/internal/protocol"
+	"github.com/compfaculty/dismap/pkg/logger"
 	"os"
 	"strconv"
 	"strings"

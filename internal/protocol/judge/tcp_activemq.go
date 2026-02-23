@@ -3,7 +3,7 @@ package judge
 import (
 	"encoding/hex"
 	"fmt"
-	"github.com/zhzyker/dismap/pkg/logger"
+	"github.com/compfaculty/dismap/pkg/logger"
 	"regexp"
 	"strconv"
 )

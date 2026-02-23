@@ -1,12 +1,12 @@
 package internal
 
 import (
-	"github.com/zhzyker/dismap/internal/flag"
-	"github.com/zhzyker/dismap/internal/operate"
-	"github.com/zhzyker/dismap/internal/output"
+	"github.com/compfaculty/dismap/internal/flag"
+	"github.com/compfaculty/dismap/internal/operate"
+	"github.com/compfaculty/dismap/internal/output"
 	"sync"
 
-	"github.com/zhzyker/dismap/pkg/logger"
+	"github.com/compfaculty/dismap/pkg/logger"
 )
 
 

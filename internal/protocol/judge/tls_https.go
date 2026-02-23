@@ -2,7 +2,7 @@ package judge
 
 import (
 	"fmt"
-	"github.com/zhzyker/dismap/pkg/logger"
+	"github.com/compfaculty/dismap/pkg/logger"
 	"net/url"
 	"regexp"
 )

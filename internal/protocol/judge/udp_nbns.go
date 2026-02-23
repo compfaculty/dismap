@@ -3,8 +3,8 @@ package judge
 import (
 	"bytes"
 	"fmt"
-	"github.com/zhzyker/dismap/internal/proxy"
-	"github.com/zhzyker/dismap/pkg/logger"
+	"github.com/compfaculty/dismap/internal/proxy"
+	"github.com/compfaculty/dismap/pkg/logger"
 	"strconv"
 	"strings"
 	"time"

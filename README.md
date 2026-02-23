@@ -3,14 +3,13 @@
 <a href="https://github.com/compfaculty/dismap"><img alt="Release" src="https://img.shields.io/badge/dismap-0.3-ff69b4"></a>
 <a href="https://github.com/compfaculty/dismap"><img alt="Release" src="https://img.shields.io/badge/LICENSE-GPL-important"></a>
 ![GitHub Repo stars](https://img.shields.io/github/stars/compfaculty/dismap?color=success)
-![GitHub forks](https://img.shields.io/github/forks/compfaculty/dismap)
 ![GitHub all release](https://img.shields.io/github/downloads/compfaculty/dismap/total?color=blueviolet)
 
 Dismap positioning is an asset **discovery** and **identification** tool. It can quickly identify protocols and fingerprint information such as web/tcp/udp, locate asset types, and is suitable for internal and external networks. It assists red team personnel to quickly locate potential risk asset information, and assist blue team personnel to detect Suspected Fragile Assets
 
 Dismap has a complete fingerprint rule base, currently including tcp/udp/tls protocol fingerprints and **4500+ web fingerprint rules**, which can identify favicon, body, header, etc. The introduction to the rule base is located at [RuleLab](https://github.com/compfaculty/dismap#-rulelab)
 
-~~Scan results can be directly sent to [vulmap](https://github.com/zhzyker/vulmap)(>=0.8) for vulnerability scanning.~~ In version 0.3, the text result has been changed, the json file result has been added, and vulmap will support linkage in >= 1.0
+Output formats: text and JSON. Results can be written to file with `-o` and `-j`.
 
 ## 🏂 Run
 
@@ -30,9 +29,7 @@ chmod +x dismap-0.3-linux-amd64
 
 # Windows
 dismap-0.3-windows-amd64.exe -h
-```  
->  ![dismap](https://github.com/zhzyker/zhzyker/blob/main/dismap-images/dismap-0.3.png)
-
+```
 
 ## 🎡 Options
 ```Python
@@ -153,8 +150,7 @@ echo -e "192.168.1.0/24\nhttps://example.com" > targets.txt && ./dismap -f targe
 ```
 
 ## ⛪ Discussion
-* Dismap bug feedback or new feature suggestion [click me](https://github.com/compfaculty/dismap/issues)
-* Twitter: https://twitter.com/zhzyker
+* Bug reports and feature requests: [Issues](https://github.com/compfaculty/dismap/issues)
 
 ## 🌈 RuleLab
 The entire rule base is a struct located in [rule.go](https://github.com/compfaculty/dismap/blob/main/configs/rule.go)

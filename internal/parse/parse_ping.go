@@ -1,7 +1,7 @@
 package parse
 
 import (
-	"github.com/zhzyker/dismap/pkg/logger"
+	"github.com/compfaculty/dismap/pkg/logger"
 	"os/exec"
 	"runtime"
 	"strconv"

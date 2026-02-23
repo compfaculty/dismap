@@ -3,9 +3,9 @@ package protocol
 import (
 	"bytes"
 	"fmt"
-	"github.com/zhzyker/dismap/internal/parse"
-	"github.com/zhzyker/dismap/internal/protocol/judge"
-	"github.com/zhzyker/dismap/pkg/logger"
+	"github.com/compfaculty/dismap/internal/parse"
+	"github.com/compfaculty/dismap/internal/protocol/judge"
+	"github.com/compfaculty/dismap/pkg/logger"
 )
 
 func JudgeTcp(result map[string]interface{}, Args map[string]interface{}) bool {

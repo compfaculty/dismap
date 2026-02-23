@@ -2,7 +2,7 @@ package logger
 
 import (
 	"fmt"
-	flag "github.com/zhzyker/dismap/internal/flag"
+	flag "github.com/compfaculty/dismap/internal/flag"
 	"os"
 	"regexp"
 	"runtime"

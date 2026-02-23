@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"time"
 
-	"github.com/zhzyker/dismap/internal/proxy"
-	"github.com/zhzyker/dismap/pkg/logger"
+	"github.com/compfaculty/dismap/internal/proxy"
+	"github.com/compfaculty/dismap/pkg/logger"
 )
 
 func TlsProtocol(host string, port int, timeout int) ([]byte, error) {

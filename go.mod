@@ -1,4 +1,4 @@
-module github.com/zhzyker/dismap
+module github.com/compfaculty/dismap
 
 go 1.24
 

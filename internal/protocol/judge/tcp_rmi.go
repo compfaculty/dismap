@@ -3,9 +3,9 @@ package judge
 import (
 	"bytes"
 	"encoding/hex"
-	"github.com/zhzyker/dismap/internal/parse"
-	"github.com/zhzyker/dismap/internal/proxy"
-	"github.com/zhzyker/dismap/pkg/logger"
+	"github.com/compfaculty/dismap/internal/parse"
+	"github.com/compfaculty/dismap/internal/proxy"
+	"github.com/compfaculty/dismap/pkg/logger"
 )
 
 func TcpRMI(result map[string]interface{}, Args map[string]interface{}) bool {
